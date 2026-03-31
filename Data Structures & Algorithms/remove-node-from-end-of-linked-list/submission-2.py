@@ -1,0 +1,50 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:    
+    def reverseList(self, head: Optional[ListNode]) -> ListNode:
+        pre, cur = None, head
+        while cur:
+            tmp = cur.next
+            cur.next = pre
+            pre = cur
+            cur = tmp
+        return pre
+
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        """
+        Do not return anything, modify head in-place instead.
+        1 2 3 4 5
+        1 1, 2 3, 3 5: stop  
+        mid = 3
+        list2 = 5 4 3
+
+        1 - 5 - 2 - 4 - 3 
+        exit when head2.next == None
+
+        1 2 3 4 
+        1 1, 2 3, 3 5: stop  
+        mid = 3
+        list2 = 4 3
+
+        1 - 4 - 2 - 3 head2 = 4
+        exit when head2.next == None
+
+        """
+        head2 = self.reverseList(head) #head2 is the head node of the second half linked list, so the list will end at midnode 
+        #so the exit condition is head2.next = None 
+        i = 1
+        pre, cur = None, head2
+        while cur:
+            tmp = cur.next
+            cur.next = pre
+            if i != n:
+                pre = cur            
+            cur = tmp
+            i+=1
+        return pre
+
+        

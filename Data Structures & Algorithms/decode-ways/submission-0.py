@@ -1,0 +1,11 @@
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        n = len(s)
+        dp = [1]+[0]*n #空字符串有一种解法。
+        #因为考虑了空字符串，所有下标加1
+        for i in range(1,n+1):
+            if s[i-1] != '0':
+                dp[i] += dp[i-1]
+            if i > 1 and s[i-2]!= '0' and int(s[i-2:i]) < 27:
+                    dp[i] += dp[i-2]
+        return dp[-1]
